@@ -6,10 +6,7 @@
         <title>Accueil - Orinoco</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer=""></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="../js/index.js"></script>
+        <link rel="stylesheet" href="/frontend/css/style.css">
     </head>
     <body>
         <header>
@@ -38,11 +35,11 @@
         </header>
 
         <section>
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="">    
-                            <ul class="row" id="articleList">
+                            <ul class="row px-0 justify-content-center" id="articleList">
                                 <!--Ajout du template--> 
                             </ul>  
                         </div>
@@ -64,11 +61,17 @@
 
         <!--Template--> 
         <template id="product">
-            <li class="col-md-5 col-sm-6 col-12 mt-4 card ml-3">
-                <a href="#"><img src="" alt="Ourson en peluche" id="image__teddies" class="card-img-top"></a>
-                <a href="#" class="mt-4 ml-3"><h1 id="name__teddies" class="card__title h4 font-weight-normal"></h1></a>
-                <div id="price__teddies" class="card__body ml-3 mb-4"></div>
-                <a href="#" class="btn btn-primary" id="href__teddies" role="button">Voir le produit</a>
+            <li class="col-md-4 col-sm-12 mt-4 card mx-2 bg-dark">
+                <a href="#" id="link__teddies" class="text-decoration-none text-white">
+                <figure>
+                    <img src="" alt="Ourson en peluche" id="image__teddies" class="card-img-top w-100 py-3">
+                    <figcaption>
+                        <h1 id="name__teddies" class="card__title h4 font-weight-bold"></h1>
+                        <div id="price__teddies" class="card__body mb-4"></div>
+                        <div id="description__teddies" class="card__body mb-4 bg-transparent"></div>
+                    </figcaption>
+                </figure>
+                </a>
             </li>
         </template>
 
@@ -76,7 +79,10 @@
     </body>
 </html>
 
-
-
+<!--Script JavaScript-->
+<script src="../js/index.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer=""></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
 
 <!--query string  -->

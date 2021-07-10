@@ -1,7 +1,7 @@
 // Main function
 ;(async() => {
     const teddies = await getTeddies()
-    garbagePage(teddies)
+    cleanPage(teddies)
 })()
 
 
@@ -20,7 +20,7 @@ async function getTeddies() {
     
 }
 
-function garbagePage(teddies) {
+function cleanPage(teddies) {
     document.getElementById("articleList").innerHTML = ''
 
 // On ajoute une boucle pour afficher les éléments 
@@ -40,7 +40,9 @@ function displayTeddies(teddy) {
     // On defini chaque élément
     cloneElt.getElementById("image__teddies").src = teddy.imageUrl
     cloneElt.getElementById("name__teddies").textContent = teddy.name
+    cloneElt.getElementById("description__teddies").textContent = teddy.description
     cloneElt.getElementById("price__teddies").textContent = `${teddy.price / 100}.00 €`
+    cloneElt.getElementById("link__teddies").href = `/produit.html?id=${teddy._id}`
 
     // On affiche le template
     document.getElementById("articleList").appendChild(cloneElt)
