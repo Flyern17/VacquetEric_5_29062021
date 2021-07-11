@@ -21,8 +21,6 @@ async function getTeddies() {
 }
 
 function cleanPage(teddies) {
-    document.getElementById("articleList").innerHTML = ''
-
 // On ajoute une boucle pour afficher les éléments 
     teddies.forEach((teddy) => {
         displayTeddies(teddy)
@@ -42,7 +40,7 @@ function displayTeddies(teddy) {
     cloneElt.getElementById("name__teddies").textContent = teddy.name
     cloneElt.getElementById("description__teddies").textContent = teddy.description
     cloneElt.getElementById("price__teddies").textContent = `${teddy.price / 100}.00 €`
-    cloneElt.getElementById("link__teddies").href = `/produit.html?id=${teddy._id}`
+    cloneElt.getElementById("link__teddies").href = `produit.html?id=${teddy._id}`
 
     // On affiche le template
     document.getElementById("articleList").appendChild(cloneElt)
