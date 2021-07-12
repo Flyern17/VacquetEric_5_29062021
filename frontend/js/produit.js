@@ -1,5 +1,11 @@
 // On prend l'id dans la requette HTTP 
 
+const queryString_url_id = window.location.search
+
+// On enlève la partie ?id= de l'élément 
+
+const leId = queryString_url_id.slice(4)
+
 // On appelle l'API
 
 
