@@ -1,7 +1,7 @@
 // Main function
 (async() => {
     const teddies = await getTeddies()
-    cleanPage(teddies)
+    loopPage(teddies)
 })()
 
 
@@ -20,7 +20,7 @@ async function getTeddies() {
     
 }
 
-function cleanPage(teddies) {
+function loopPage(teddies) {
 // On ajoute une boucle pour afficher les éléments 
     teddies.forEach((teddy) => {
         displayTeddies(teddy)
