@@ -1,4 +1,9 @@
-img {
+.size-16 {
     height: 16rem;
+    object-fit: cover;
+}
+
+.size-32 {
+    height: 24rem;
     object-fit: cover;
 }

@@ -1,5 +1,5 @@
 // Main function
-;(async() => {
+(async() => {
     const teddies = await getTeddies()
     cleanPage(teddies)
 })()
