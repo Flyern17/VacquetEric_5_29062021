@@ -9,10 +9,6 @@
 // On prend l'id dans la requette HTTP 
 function requestId() {
     return new URL(window.location.href).searchParams.get("id")
-
-//    const queryString_url_id = window.location.search;
-//    const urlSearchParams = new URLSearchParams(queryString_url_id)
-//    const id = urlSearchParams.get("id")
 }
 
 // On appelle l'API
