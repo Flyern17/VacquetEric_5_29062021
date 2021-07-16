@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/frontend/css/style.css">
+
+        <script src="https://kit.fontawesome.com/289d9bac8a.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <!--Header-->
@@ -28,7 +30,7 @@
                     <form class="form-inline my-1">
                         <input type="search" class="form-control mr-2 w-75" id="searchBar" placeholder="De quoi avez vous besoin?">
                         <!--Barre de recherche-->
-                        <button class="btn btn-outline-info" type="submit"><i class="fa fa-search"></i></button>
+                        <button id="addToCart" class="btn btn-outline-info" type="submit"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
 
@@ -38,19 +40,30 @@
         <section>
             <div class="container my-5">
                 <div class="row">
-                    <div class="col-12 card bg-dark d-flex justify-content-center flex-row">
+                    <div class="col-12 card bg-dark d-flex justify-content-center flex-lg-row flex-column" id="container__teddies">
                         <figure>
-                            <img src="/images/teddy_1.jpg" alt="" class="card-img-left size-32 mt-3" id="">
+                            <img src="#" alt="" class="card-img-left size-32 mt-2" id="image__teddies">
                         </figure>
                         <figcaption>
-                            <h1 class="card-title text-white ml-4 mt-3 h4 font-weight-bold text-center" id="name__teddies">Norbert</h1>
-                            <div class="card-body text-white ml-1">
+                            <h1 class="card-title text-white ml-4 mt-3 h4 font-weight-bold text-center" id="name__teddies"></h1>
+                            <div class="card-body text-white ml-1 d-flex flex-column h-auto">
                                 <div id="note__teddies"></div>
-                                <div id="evaluation__teddies"></div>
-                                <div class="description" id="description__teddies">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae ipsam quis dolorum, eaque fuga asperiores</div>
-                                <div class="rate"> 5 étoiles</div>
-                                <div id="colors__teddies"></div>
-                                <button class="btn btn-info font-weight-bold text-center border border-white w-100">Ajouter au panier pour <span id="price__teddies"></span></button>
+                                <div class="text-decoration-underline" id="evaluation__teddies">9 avis</div>
+                                <div class="avis">
+                                    <i class="fas fa-star blue__color"></i>
+                                    <i class="fas fa-star blue__color"></i>
+                                    <i class="fas fa-star blue__color"></i>
+                                    <i class="fas fa-star blue__color"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="" id="description__teddies"></div>
+                                <h2 class="color__choice h5">Choisissez votre couleur : </h2>
+                                <div class="" id="colors__teddies">
+                                    <template id="teddiesColor">
+                                        <div></div>
+                                    </template>
+                                </div>
+                                <button class="btn btn-info font-weight-bold text-center border border-white w-100 mt-auto">Ajouter au panier pour <span id="price__teddies"></span></button>
                             </div>
                         </figcaption>
                     </div>
