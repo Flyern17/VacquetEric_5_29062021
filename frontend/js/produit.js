@@ -30,28 +30,35 @@ function displayTeddies(teddies) {
     document.getElementById("name__teddies").textContent = teddies.name
     document.getElementById("description__teddies").textContent = teddies.description
     document.getElementById("price__teddies").textContent = `${teddies.price / 100}.00 €`
-    // Il faut créer le cadre des couleurs
-    document.getElementById("colors__teddies").textContent = teddies.colors
+
+    // On crée les différents éléments pour l'affichage de la color
+
+
+    
+    const teddyColor = teddies.colors
+    console.log(teddyColor)
+
+    let elements = document.querySelector("input")
+    const templateElts = document.getElementById("teddiesColor")
+    const cloneElts = document.importNode(templateElts.content, true)
+
+// A chaque fois qu'on incrémente i, un nouvel input est crée et une couleur est mise dedans   
+    for(let i = 0; i < teddyColor.length; i++) {
+        let displayColor = teddyColor[i]
+        console.log(displayColor)
+        document.getElementById("templateColor").appendChild(cloneElts)
+    }
+
+
+
+
+
 }
 
-// Creation de catégories dynamiques pour le choix de la couleur des éléments
-
-/*
-const colorsElt = document.getElementById("colors__teddies")
-teddy.colors.forEach((color) => {
-
-
-    const templateElt = document.getElementById("teddiesColor")
-    const cloneElt = document.importNode(templateElt.content, true)
-
-    colorsElt.appendChild(cloneElt)
-})
-
-
 // Ajout d'un evenement sur le bouton pour ajouter dans un panier
-
+/*
  document.getElementById("addToCart").addEventListener("click", function(event){
     event.preventDefault()
 
-}) */
-
+}) 
+*/
