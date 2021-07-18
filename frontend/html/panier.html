@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="/frontend/css/style.css">
     </head>
     <body>
-        <!--Header-->
         <header>
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +21,7 @@
                             <a href="#" class="nav-link">Mes commandes</a>
                         </li>
                         <li class="nav-item">
-                            <a href="panier.html" class="nav-link active">Mon panier</a>
+                            <a href="#" class="nav-link active">Mon panier</a>
                         </li>
                     </ul> 
                     <form class="form-inline my-1">
@@ -35,19 +34,36 @@
             </nav>
         </header>
 
-        <section>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="">    
-                            <ul class="row px-0 justify-content-center" id="articleList">
-                                <!--Ajout du template--> 
-                            </ul>  
-                        </div>
+        <div class="container">
+            <div class="row py-5 justify-content-between">
+                <div class="col-5 border border-primary">
+                    <h1 class="h3">Mon panier</h1>
+                </div>
+                <div class="col-5 border border-danger">
+                    <div class="w-100 py-2">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" id="firstName" name="firstName" class="w-100" required>
                     </div>
+                    <div class="w-100 py-2">
+                        <label for="lastName">Nom de famille</label>
+                        <input type="text" id="lastName" name="lastName" class="w-100" required>
+                    </div>
+                    <div class="w-100 py-2">
+                        <label for="address">Adresse</label>
+                        <input type="text" id="address" name="address" class="w-100" required>
+                    </div>
+                    <div class="w-100 py-2">
+                        <label for="city">Ville</label>
+                        <input type="text" id="city" name="city" class="w-100" required>
+                    </div>
+                    <div class="w-100 py-2">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="w-100" required>
+                    </div>
+                    <button class="btn btn-info my-4 py-2" type="submit">Valider votre commande</button>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!--Footer-->
         <footer class="bg-dark mt-3">
@@ -59,32 +75,8 @@
                     </div>
                 </div>
             </div>
-        </footer>
-
-        <!--Template--> 
-        <template id="product">
-            <li class="col-md-4 col-sm-12 mt-4 card mx-2 bg-dark">
-                <a href="#" id="link__teddies" class="text-decoration-none text-white">
-                <figure>
-                    <img src="" alt="Ourson en peluche" id="image__teddies" class="card-img-top w-100 py-3 size-16">
-                    <figcaption>
-                        <h1 id="name__teddies" class="card__title h4 font-weight-bold"></h1>
-                        <div id="price__teddies" class="card__body mb-4"></div>
-                        <div id="description__teddies" class="card__body mb-4 bg-transparent"></div>
-                    </figcaption>
-                </figure>
-                </a>
-            </li>
-        </template>
-
-
+        </footer>        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer=""></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </body>
 </html>
-
-<!--Script JavaScript-->
-<script src="../js/index.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer=""></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        
-
-<!--query string  -->

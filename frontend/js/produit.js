@@ -38,15 +38,18 @@ function displayTeddies(teddies) {
     const teddyColor = teddies.colors
     console.log(teddyColor)
 
-    let elements = document.querySelector("input")
-    const templateElts = document.getElementById("teddiesColor")
+    const templateElts = document.getElementById("templateColor")
     const cloneElts = document.importNode(templateElts.content, true)
-
+    
 // A chaque fois qu'on incrémente i, un nouvel input est crée et une couleur est mise dedans   
     for(let i = 0; i < teddyColor.length; i++) {
         let displayColor = teddyColor[i]
-        console.log(displayColor)
-        document.getElementById("templateColor").appendChild(cloneElts)
+        cloneElts.getElementById("inputColor").name = i
+        cloneElts.getElementById("inputLabel").textContent = displayColor
+
+        // On affiche le template
+        document.getElementById("formColor").appendChild(cloneElts)
+
     }
 
 
