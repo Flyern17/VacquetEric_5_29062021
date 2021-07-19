@@ -36,28 +36,55 @@
 
         <div class="container">
             <div class="row py-5 justify-content-between">
-                <div class="col-5 border border-primary">
+                <div class="col-12 col-lg-6 border border-primary">
                     <h1 class="h3">Mon panier</h1>
+                    <table class="table table-dark table-striped table-bordered">
+                        <tr class="border">
+                            <th class="" scope="col">
+                                Produit
+                            </th>
+                            <th scope="col">
+                                Quantité
+                            </th>
+                            <th scope="col">
+                                Prix
+                            </th>
+                        </tr>
+
+                        <template id="templateTable">
+                            <tr>
+                                <td id="nameTeddies">
+                                    
+                                </td>
+                                <td id="NumberOfTeddies">
+
+                                </td>
+                                <td id="priceTeddies">
+
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
                 </div>
-                <div class="col-5 border border-danger">
+                <div class="col-12 col-lg-5 bg-dark">
                     <div class="w-100 py-2">
-                        <label for="firstName">Prénom</label>
+                        <label for="firstName" class="text-white">Prénom</label>
                         <input type="text" id="firstName" name="firstName" class="w-100" required>
                     </div>
                     <div class="w-100 py-2">
-                        <label for="lastName">Nom de famille</label>
+                        <label for="lastName" class="text-white">Nom de famille</label>
                         <input type="text" id="lastName" name="lastName" class="w-100" required>
                     </div>
                     <div class="w-100 py-2">
-                        <label for="address">Adresse</label>
+                        <label for="address" class="text-white">Adresse</label>
                         <input type="text" id="address" name="address" class="w-100" required>
                     </div>
                     <div class="w-100 py-2">
-                        <label for="city">Ville</label>
+                        <label for="city" class="text-white">Ville</label>
                         <input type="text" id="city" name="city" class="w-100" required>
                     </div>
                     <div class="w-100 py-2">
-                        <label for="email">Email</label>
+                        <label for="email" class="text-white">Email</label>
                         <input type="email" id="email" name="email" class="w-100" required>
                     </div>
                     <button class="btn btn-info my-4 py-2" type="submit">Valider votre commande</button>
