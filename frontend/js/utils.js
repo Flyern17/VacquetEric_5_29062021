@@ -15,7 +15,7 @@ function addToCart(teddy) {
     // Utilisation du localStorage 
     // Stocker la récupération des valeurs dans le localStorage
 
-    let productSaveLocalStorage = JSON.parse(localStorage.getItem("produit"));
+    let productSaveLocalStorage = JSON.parse(localStorage.getItem("product"));
     // JSON.parse pour convertir des données en JSON
 
     // Ajout d'une fonction qui ajoute un produit dans le local storage
@@ -29,7 +29,7 @@ function addToCart(teddy) {
 
     // fonction pop up 
     const popupConfirmation = () => {
-        if(window.confirm(`${teddy.name} option: ${choixForm} a bieen été ajouté au panier
+        if(window.confirm(`${teddy.name} option: ${choixForm} a bien été ajouté au panier
         Consultez le panier OK ou revenir à l'accueil ANNULER`)){
             window.location.href = "panier.html"
         } 
