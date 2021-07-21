@@ -6,7 +6,7 @@
         <title>Accueil - Orinoco</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/frontend/css/style.css">
+        <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
         <header>
@@ -36,37 +36,29 @@
 
         <div class="container">
             <div class="row py-5 justify-content-between">
-                <div class="col-12 col-lg-6 border border-primary">
+                <div class="col-12 border border-primary">
                     <h1 class="h3">Mon panier</h1>
                     <table class="table table-dark table-striped table-bordered">
-                        <tr class="border">
-                            <th class="" scope="col">
-                                Produit
-                            </th>
-                            <th scope="col">
-                                Quantité
-                            </th>
-                            <th scope="col">
-                                Prix
-                            </th>
-                        </tr>
-
-                        <template id="templateTable">
-                            <tr>
-                                <td id="nameTeddies">
-                                    
-                                </td>
-                                <td id="NumberOfTeddies">
-
-                                </td>
-                                <td id="priceTeddies">
-
-                                </td>
+                        <thead>
+                            <tr class="border"> 
+                                <th>
+                                    Produit
+                                </th>
+                                <th>
+                                    Quantité
+                                </th>
+                                <th>
+                                    Prix
+                                </th>
                             </tr>
-                        </template>
+                        </thead>
+                        <tbody id="cart-tablebody"></tbody>
                     </table>
+
+                    <p>Sous total : <span class="subtotal"></span>€</p>
+                    <button id="confirm-command">Passer la commande</button>
                 </div>
-                <div class="col-12 col-lg-5 bg-dark">
+                <div class="col-12 d-flex flex-column align-items-center bg-dark my-5">
                     <div class="w-100 py-2">
                         <label for="firstName" class="text-white">Prénom</label>
                         <input type="text" id="firstName" name="firstName" class="w-100" required>
@@ -103,6 +95,7 @@
                 </div>
             </div>
         </footer>        
+        <script src="../js/utils.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer=""></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </body>
