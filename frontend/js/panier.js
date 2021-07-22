@@ -75,3 +75,53 @@ for (let p = 0; p < btnDelete.length; p++) {
 
 // Ajout d'un bouton pour vider entièrement le panier 
 
+// Le code HTML du boutton à afficher dans la page
+const positionPanierAll = document.querySelector("#btnDeleteAll")
+
+const btnAllDelete = `
+<button class="btn btn-danger my-2 btn-all-delete-cart">Vider le panier</button>
+`
+
+// Insertion du bouton dans le HTML du panier 
+positionPanierAll.insertAdjacentHTML("afterend", btnAllDelete)
+
+// Selection de la référence du bouton 
+const btnAllDeleteCart = document.querySelector(".btn-all-delete-cart")
+
+// Suppression de la key product pour tout delete 
+btnAllDeleteCart.addEventListener("click", (event) => {
+    event.preventDefault()
+    // Vidage du localstorage 
+    localStorage.removeItem("product")
+
+    // Actualisation de la page
+    alert("Les produits ont bien été supprimés")
+    window.location.href = "panier.html"
+})
+
+// Calcul du montant du panier 
+
+let prixTotalCalcul = []
+
+// Definition du code HTML 
+const displayPrice = document.querySelector("#priceTotal")
+if(productSaveLocalStorage !== null) {
+    // On va chercher les prix dans le panier
+    for (l = 0; l < productSaveLocalStorage.length; l++) {
+        let prixProductInCart = productSaveLocalStorage[l].prix 
+    
+        // Mettre les prix du panier dans la variable prixTotal
+        prixTotalCalcul.push(prixProductInCart)
+    }
+}
+
+
+// Addition des prix dans le tableau à la variable prix total
+const reducer = (accumulator, currentValue) => accumulator + currentValue
+const prixTotal = prixTotalCalcul.reduce(reducer, 0)
+
+// Code HTML du prix total à afficher
+const affichagePrixHtml = `
+<span class="affichage-prix-html"> ${prixTotal / 100} € </span>
+`
+const displayPrixTotal = displayPrice.insertAdjacentHTML("afterBegin", affichagePrixHtml)
