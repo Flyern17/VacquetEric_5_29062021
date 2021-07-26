@@ -59,9 +59,10 @@ for (let p = 0; p < btnDelete.length; p++) {
         event.preventDefault()
         // Sélection de l'id du produit qui va être supprimer en cliquant sur le btn
         let id_selectionner_suppression = productSaveLocalStorage[p].id_Produit
-
+        let color_selectionner_suppression = productSaveLocalStorage[p].color_produit
+        
         // Filtrage des elements avec la méthode filter 
-        productSaveLocalStorage = productSaveLocalStorage.filter( elt => elt.id_Produit !== id_selectionner_suppression)
+        productSaveLocalStorage = productSaveLocalStorage.filter( elt => ((elt.id_Produit !== id_selectionner_suppression) || elt.color_produit !== color_selectionner_suppression))
 
         // On envoie la variable dans le local storage
         // Transformation en format JSON
@@ -125,3 +126,39 @@ const affichagePrixHtml = `
 <span class="affichage-prix-html"> ${prixTotal / 100} € </span>
 `
 const displayPrixTotal = displayPrice.insertAdjacentHTML("afterBegin", affichagePrixHtml)
+
+
+// Partie du formulaire 
+
+// Selection du bouton de formulaire 
+
+const btnSendForm = document.querySelector("#btn-send-command")
+
+// Ajout d'un addEventListener sur le bouton de confirmation
+
+btnSendForm.addEventListener("click", (event) => {
+    event.preventDefault()
+
+    // Récupération des valeurs du formulaire
+
+    const formulaireValues = {
+        firstName: document.querySelector("#firstName").value,
+        lastName: document.querySelector("#lastName").value,
+        address: document.querySelector("#address").value,
+        city: document.querySelector("#city").value,
+        email: document.querySelector("#email").value
+    }
+    console.log(formulaireValues)
+
+    // Mettre l'objet formulaireValues dans le local storage
+    localStorage.setItem("formValues", JSON.stringify(formulaireValues))
+
+    // Mettre les values du formulaire et les produits selectionnés dans un objet à envoyer vers le serveur
+    const toSendOnServer = {
+        productSaveLocalStorage,
+        formulaireValues
+    }
+    console.log(toSendOnServer)
+    // Envoi de l'objet toSendOnServer vers le serveur
+})
+
