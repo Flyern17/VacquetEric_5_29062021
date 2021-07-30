@@ -1,8 +1,10 @@
  // Main function
 ;(async() => {
-    const teddiesId = requestId()
-    const teddiesData = await getTeddiesData(teddiesId)
-    displayTeddies(teddiesData)
+    const teddyId = requestId()
+    const teddy = await getTeddiesData(teddyId)
+    let html = render(teddy)
+    display(html)
+    listenForCartAddition(teddy)
 })()
 
 
@@ -13,10 +15,9 @@ function requestId() {
 
 // On appelle l'API
 
-function getTeddiesData(teddiesId) {
-    return fetch(`http://localhost:3000/api/teddies/${teddiesId}`)
+function getTeddiesData(id) {
+    return fetch(`http://localhost:3000/api/teddies/${id}`)
     .then(response => response.json())
-    .then(teddiesData => teddiesData)
     .catch((error) => {
         alert("La connexion au serveur n'a pas pu être établie")
     })
@@ -24,7 +25,7 @@ function getTeddiesData(teddiesId) {
 
 // On renvoie les informations de l'oursons correspondant à l'id
 
-function displayTeddies(teddy) {
+function render(teddy) {
 
     let options = `<select id="options_produit">`
     teddy.colors.forEach(color => {
@@ -32,7 +33,7 @@ function displayTeddies(teddy) {
     })
     options += `</select>`
 
-    document.getElementById("product").innerHTML = `
+    return `
     <div class="row">
         <div class="col-12 card bg-dark d-flex justify-content-center flex-lg-row flex-column" id="container__teddies">
             <figure>
@@ -54,7 +55,7 @@ function displayTeddies(teddy) {
                         
                         <div class="text-justify my-4">${teddy.description}</div>
                         <h2 class="color__choice mt-1 h6">Choisissez votre couleur : </h2>
-                        <div class="">
+                        <div class="my-2">
                             <!--Ajout des boutons de choix de couleur-->
                             <form id="formColor">
                                 ${options}
@@ -67,6 +68,17 @@ function displayTeddies(teddy) {
         </div>
     </div>
     `
+}
+
+// Affiche le code html
+
+function display(html) {
+    document.getElementById("product").innerHTML = html
+}
+
+// Ecoute l'evenement lors d'un clic
+
+function listenForCartAddition(teddy) {  
     // Selection du bouton Ajouter l'article au panier
     const btnSendPanier = document.querySelector("#btn-addPanier")
 
@@ -79,6 +91,59 @@ function displayTeddies(teddy) {
 }
 
 
+function addToCart(teddy) {
 
+    const idForm = document.querySelector("#options_produit")
+    // Mettre le choix du user dans une variable
 
+    // const choixForm = idForm.value
 
+    // Récupération des valeurs du formulaire
+    let optionsProduit = {
+        id_Produit: teddy._id,
+        quantite: 1,   
+    }
+    
+    // Utilisation du localStorage 
+    // Stocker la récupération des valeurs dans le localStorage
+
+    let productSaveLocalStorage = JSON.parse(localStorage.getItem("product"));
+    // JSON.parse pour convertir des données en JSON
+
+    // Ajout d'une fonction qui ajoute un produit dans le local storage 
+
+    // SI le localStorage est vide 
+    if (localStorage.length == 0) {
+        productSaveLocalStorage = [];
+        productSaveLocalStorage.push(optionsProduit);
+        localStorage.setItem("product", JSON.stringify(productSaveLocalStorage))
+    }
+    // Si le localStorage n'est pas vide 
+    else {
+        let parseProductSaveLocalStorage = JSON.parse(localStorage.product)
+        const productExist = parseProductSaveLocalStorage.find(optionsProduit => optionsProduit.id_Produit == teddy._id)
+        
+        // Si le produit concerné n'est pas dans le tableau, on l'ajoute
+        if (productExist == undefined) {
+            parseProductSaveLocalStorage.push(optionsProduit)
+        } 
+        // Si il est dans le tableau, on check tout les éléments pour incrémenter celui qui partage le même id
+        else {
+            for(let index in parseProductSaveLocalStorage) {
+                if(parseProductSaveLocalStorage[index].id_Produit == teddy._id) {
+                    parseProductSaveLocalStorage[index].quantite++
+                }
+            }
+        }
+        // On envoie le tableau dans le localStorage
+        localStorage.setItem("product", JSON.stringify(parseProductSaveLocalStorage));
+        redirect(teddy.name);
+    }
+}
+
+const redirect = (name) => {
+    let phrase = `${name} a bien été ajouté au panier   
+Consultez le panier OK ou revenir à l'accueil ANNULER`
+    let question = window.confirm(phrase)
+    window.location.href = (question) ? "panier.html" : "index.html" 
+}
