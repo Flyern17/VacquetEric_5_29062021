@@ -1,12 +1,13 @@
  // Main function
  ;(async() => {
     const teddyId = takeId()
-    console.log(teddyId)
     const teddy = await getTeddiesData(teddyId)
+    console.log()
     displayCart(teddy);
     deleteProduct();
     deleteAllProduct();
-    priceTotal();
+    priceTotal()
+    sendForm();
 })()
 
 
@@ -16,22 +17,59 @@ function takeId() {
     if (!productSave == null || !productSave == 0) {
         let id = [];
         for (i = 0; i < productSave.length; i++) {
-            id = productSave[i].id_Produit
+            idProduit = productSave[i].id_Produit
+            id.push(idProduit)
         } 
         return id
+        // On renvoie un tableau contenant toutes les id présentes dans le localStorage
     }
 }
 
 // On appelle l'API
+/*
+return fetch(`http://localhost:3000/api/teddies/${id}`)
+    .then(response => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            console.log("Une erreur est survenue")
+        }
+    })
+    .then(response => console.log(response))
 
-function getTeddiesData(id) {
+
     return fetch(`http://localhost:3000/api/teddies/${id}`)
     .then(response => response.json())
     .catch((error) => {
         alert("La connexion au serveur n'a pas pu être établie")
     })
+*/
+
+function getTeddiesData(teddyId) {
+    let id = []
+    for (o = 0; o < teddyId.length; o++) {
+        id = teddyId[o]
+    } 
+    return fetch(`http://localhost:3000/api/teddies/${id}`)
+        .then(response => response.json())
+        .catch((error) => {
+        alert("La connexion au serveur n'a pas pu être établie")
+    })
 }
 
+
+function display(teddy) {
+    // On ajoute une boucle pour afficher les éléments 
+    
+        let html = '';
+    
+        teddy.forEach((teddy) => {
+            html += renderTeddy(teddy)
+        })
+    
+        document.getElementById("articleList").innerHTML = html
+    }
+    
 
 // On récupère les informations contenues dans le local storage
 
@@ -82,6 +120,7 @@ function displayCart(teddy) {
             //Injection html dans la page panier
             positionPanier.innerHTML = structureProduitPanier
         }
+        
     }
 }
 // Fin de l'affichage des produits du panier 
@@ -138,22 +177,20 @@ function deleteAllProduct() {
     // Actualisation de la page
     alert("Les produits ont bien été supprimés")
     window.location.href = "panier.html"
-})
+    })
 }
 
 // Calcul du montant du panier 
-function priceTotal() {
+function priceTotal(teddy) {
     let prixTotalCalcul = []
-
     // Definition du code HTML 
     const displayPrice = document.querySelector("#priceTotal")
     if(productSaveLocalStorage !== null) {
         // On va chercher les prix dans le panier
         for (l = 0; l < productSaveLocalStorage.length; l++) {
-            let prixProductInCart = productSaveLocalStorage[l].price 
+            let prixProductInCart = 0
             // Mettre les prix du panier dans la variable prixTotal
             prixTotalCalcul.push(prixProductInCart)
-
         }
     }
 
@@ -172,36 +209,143 @@ function priceTotal() {
 
 
 // Partie du formulaire 
+function sendForm() {
+    // Selection du bouton de formulaire 
+    const btnSendForm = document.querySelector("#btn-send-command")
 
-// Selection du bouton de formulaire 
+    // Ajout d'un addEventListener sur le bouton de confirmation
 
-const btnSendForm = document.querySelector("#btn-send-command")
-
-// Ajout d'un addEventListener sur le bouton de confirmation
-
-btnSendForm.addEventListener("click", (event) => {
+    btnSendForm.addEventListener("click", (event) => {
     event.preventDefault()
 
     // Récupération des valeurs du formulaire
 
-    const formulaireValues = {
+    const contact = {
         firstName: document.querySelector("#firstName").value,
         lastName: document.querySelector("#lastName").value,
         address: document.querySelector("#address").value,
         city: document.querySelector("#city").value,
         email: document.querySelector("#email").value
     }
-    console.log(formulaireValues)
 
-    // Mettre l'objet formulaireValues dans le local storage
-    localStorage.setItem("formValues", JSON.stringify(formulaireValues))
+    // Gestion validation formulaire 
+
+    function regExNameCity(value) {
+        return /^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]){3,20}$/.test(value)
+    }
+    function regExEmail(value) {
+        return /^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
+    }
+    function regExAddress(value) {
+        return /^[A-Za-z0-9\s\']{5,50}$/.test(value)
+    }
+
+
+    function controlFirstName(){
+    // Controle du prenom
+        const lePrenom = contact.firstName
+        if(regExNameCity(lePrenom)) {
+            return true
+        } else {
+            alert("Le prenom ne doit pas contenir de chiffres et de symboles \nEntre 3 et 20 caractères")
+            return false
+        }
+    }
+
+    function controlLastName(){
+    // Controle du nom
+        const leNom = contact.lastName
+        if(regExNameCity(leNom)) {
+            return true
+        } else {
+            alert("Le nom ne doit pas contenir de chiffres et de symboles \nEntre 3 et 20 caractères")
+            return false
+        }
+    }
+
+    function controlCity(){
+    // Controle de la ville
+        const laVille = contact.city
+        if(regExNameCity(laVille)) {
+            return true
+        } else {
+            alert("La ville ne doit pas contenir de chiffres et de symboles \nEntre 3 et 20 caractères")
+            return false
+        }
+    }
+
+    function controlEmail(){
+    // Controle de l'émail
+        const lemail = contact.email
+        if(regExEmail(lemail)) {
+            return true
+        } else {
+            alert("L'email n'est pas valide")
+            return false
+        }
+    }
+
+    function controlAddress(){
+    // Controle de l'adresse
+        const ladresse = contact.address
+        if(regExAddress(ladresse)) {
+            return true
+        } else {
+            alert("L'adresse ne doit contenir que des lettres sans ponctuation et des chiffres")
+            return false
+        }
+    }
+
+
+    if(controlFirstName() && controlLastName() && controlAddress() && controlCity() && controlEmail()){
+        // Mettre l'objet formulaireValues dans le local storage
+        localStorage.setItem("contact", JSON.stringify(contact))
+    } 
+
+    // Prendre la key product dans le localStorage et extraire les id
+    let products = []
+    for (a = 0; a < productSaveLocalStorage.length; a++) {
+        products.push(productSaveLocalStorage[a].id_Produit)
+    }
+    
+    localStorage.setItem("products", JSON.stringify(products))
 
     // Mettre les values du formulaire et les produits selectionnés dans un objet à envoyer vers le serveur
     const payload = {
-        productSaveLocalStorage,
-        formulaireValues
+        products,
+        contact
     }
-    console.log(payload)
-    // Envoi de l'objet toSendOnServer vers le serveur
-})
+    console.log(payload.products)
 
+    sendToServer(payload);
+
+    localStorage.removeItem("products")
+    })
+
+}
+
+        
+function sendToServer(payload) {
+    // Envoi de l'objet payload vers le serveur
+    const promise01 = fetch("http://localhost:3000/api/teddies/order", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type" : "application/json",
+        }
+    });
+    promise01.then(async(response) => {
+        try{
+            const contenu = await response.json()
+            console.log(contenu.orderId)
+
+            // Mettre l'orderId dans le localStorage
+            localStorage.setItem("responseOrderId", JSON.stringify(contenu.orderId))
+
+            // Aller à la page de confirmation de commande 
+            window.location = "commande.html"
+        }catch(error){
+            alert(`${error}`)
+        }
+    })
+}

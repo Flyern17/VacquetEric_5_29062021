@@ -41,7 +41,7 @@ function renderTeddy(teddy) {
                 <img src="${teddy.imageUrl}" alt="Ourson en peluche" id="image__teddies" class="card-img-top w-100 py-3 size-16">
                 <figcaption>
                     <h1 class="card__title h4 font-weight-bold">${teddy.name}</h1>
-                    <div id="price__teddies" class="card__body mb-4">${teddy.price} €</div>
+                    <div id="price__teddies" class="card__body mb-4">${teddy.price / 100} €</div>
                     <div id="description__teddies" class="card__body mb-4 bg-transparent">${teddy.description}</div>
                 </figcaption>
             </figure>

@@ -1,7 +1,7 @@
  // Main function
 ;(async() => {
     const teddyId = requestId()
-    const teddy = await getTeddiesData(teddyId)
+    const teddy = await getTeddyData(teddyId)
     let html = render(teddy)
     display(html)
     listenForCartAddition(teddy)
@@ -15,7 +15,7 @@ function requestId() {
 
 // On appelle l'API
 
-function getTeddiesData(id) {
+function getTeddyData(id) {
     return fetch(`http://localhost:3000/api/teddies/${id}`)
     .then(response => response.json())
     .catch((error) => {
@@ -137,8 +137,8 @@ function addToCart(teddy) {
         }
         // On envoie le tableau dans le localStorage
         localStorage.setItem("product", JSON.stringify(parseProductSaveLocalStorage));
-        redirect(teddy.name);
     }
+    redirect(teddy.name);
 }
 
 const redirect = (name) => {
