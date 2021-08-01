@@ -49,27 +49,14 @@ function getTeddiesData(teddyId) {
     let id = []
     for (o = 0; o < teddyId.length; o++) {
         id = teddyId[o]
-    } 
-    return fetch(`http://localhost:3000/api/teddies/${id}`)
+        fetch(`http://localhost:3000/api/teddies/${id}`)
         .then(response => response.json())
         .catch((error) => {
         alert("La connexion au serveur n'a pas pu être établie")
-    })
+        })
+    }  
 }
 
-
-function display(teddy) {
-    // On ajoute une boucle pour afficher les éléments 
-    
-        let html = '';
-    
-        teddy.forEach((teddy) => {
-            html += renderTeddy(teddy)
-        })
-    
-        document.getElementById("articleList").innerHTML = html
-    }
-    
 
 // On récupère les informations contenues dans le local storage
 
