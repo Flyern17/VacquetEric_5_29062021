@@ -37,23 +37,18 @@ return fetch(`http://localhost:3000/api/teddies/${id}`)
     })
     .then(response => console.log(response))
 
-
-    return fetch(`http://localhost:3000/api/teddies/${id}`)
-    .then(response => response.json())
-    .catch((error) => {
-        alert("La connexion au serveur n'a pas pu être établie")
-    })
 */
 
 function getTeddiesData(teddyId) {
     let id = []
     for (o = 0; o < teddyId.length; o++) {
         id = teddyId[o]
-        fetch(`http://localhost:3000/api/teddies/${id}`)
+        return fetch(`http://localhost:3000/api/teddies/${id}`)
         .then(response => response.json())
         .catch((error) => {
         alert("La connexion au serveur n'a pas pu être établie")
         })
+         
     }  
 }
 
@@ -175,6 +170,7 @@ function priceTotal(teddy) {
     if(productSaveLocalStorage !== null) {
         // On va chercher les prix dans le panier
         for (l = 0; l < productSaveLocalStorage.length; l++) {
+            // A changer
             let prixProductInCart = 0
             // Mettre les prix du panier dans la variable prixTotal
             prixTotalCalcul.push(prixProductInCart)
