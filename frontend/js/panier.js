@@ -20,24 +20,13 @@ function takeId() {
             idProduit = productSave[i].id_Produit
             id.push(idProduit)
         } 
-        return id
         // On renvoie un tableau contenant toutes les id présentes dans le localStorage
+        return id
+       
     }
 }
 
 // On appelle l'API
-/*
-return fetch(`http://localhost:3000/api/teddies/${id}`)
-    .then(response => {
-        if (response.ok) {
-            return response.json()
-        } else {
-            console.log("Une erreur est survenue")
-        }
-    })
-    .then(response => console.log(response))
-
-*/
 
 function getTeddiesData(teddyId) {
     let id = []
@@ -117,10 +106,9 @@ function deleteProduct() {
             event.preventDefault()
             // Sélection de l'id du produit qui va être supprimer en cliquant sur le btn
             let id_selectionner_suppression = productSaveLocalStorage[p].id_Produit
-            let color_selectionner_suppression = productSaveLocalStorage[p].color_produit
             
             // Filtrage des elements avec la méthode filter 
-            productSaveLocalStorage = productSaveLocalStorage.filter( elt => ((elt.id_Produit !== id_selectionner_suppression) || elt.color_produit !== color_selectionner_suppression))
+            productSaveLocalStorage = productSaveLocalStorage.filter( elt => (elt.id_Produit !== id_selectionner_suppression))
     
             // On envoie la variable dans le local storage
             // Transformation en format JSON
@@ -170,7 +158,7 @@ function priceTotal(teddy) {
     if(productSaveLocalStorage !== null) {
         // On va chercher les prix dans le panier
         for (l = 0; l < productSaveLocalStorage.length; l++) {
-            // A changer
+            // A changer et selectionner l'endroit ou prendre les valeurs
             let prixProductInCart = 0
             // Mettre les prix du panier dans la variable prixTotal
             prixTotalCalcul.push(prixProductInCart)
