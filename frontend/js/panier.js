@@ -1,99 +1,61 @@
- // Main function
- ;(async() => {
-    const teddyId = takeId()
-    const teddy = await getTeddiesData(teddyId)
-    console.log()
-    displayCart(teddy);
-    deleteProduct();
-    deleteAllProduct();
-    priceTotal()
-    sendForm();
-})()
-
-
-// On prend l'id dans le local storage 
-function takeId() {
-    let productSave = JSON.parse(localStorage.getItem("product"))
-    if (!productSave == null || !productSave == 0) {
-        let id = [];
-        for (i = 0; i < productSave.length; i++) {
-            idProduit = productSave[i].id_Produit
-            id.push(idProduit)
-        } 
-        // On renvoie un tableau contenant toutes les id présentes dans le localStorage
-        return id
-       
-    }
-}
+let productSaveLocalStorage = get("products");
 
 // On appelle l'API
+fetch(`http://localhost:3000/api/teddies/`)
+.then(response => response.json())
+.then(data => {
+    let teddies = []
+    productSaveLocalStorage.forEach(item => {
+        let teddy = find(item.id_Produit, data)
+        teddy.qty = item.quantite
+        teddies.push(teddy)
+    })
 
-function getTeddiesData(teddyId) {
-    let id = []
-    for (o = 0; o < teddyId.length; o++) {
-        id = teddyId[o]
-        return fetch(`http://localhost:3000/api/teddies/${id}`)
-        .then(response => response.json())
-        .catch((error) => {
-        alert("La connexion au serveur n'a pas pu être établie")
-        })
-         
-    }  
+    displayCart(teddies)
+})
+ 
+function find(id, data) {
+    return data.find(teddy => teddy._id == id)
 }
-
-
-// On récupère les informations contenues dans le local storage
-
-let productSaveLocalStorage = JSON.parse(localStorage.getItem("product"));
-
-
+ 
 // Affichage des produits du panier
 
-function displayCart(teddy) {
+function displayCart(teddies) {
 
     // Selection de la classe ou je vais injecter le code HTML
     const positionPanier = document.querySelector("#table-produits-panier")
 
+    let html = "";
+    teddies.forEach(teddy => 
+        html += `
+                    <tbody id="cart-tablebody" class="font-weight-bold">
+                        <tr class="">
+                            <td class="text-center">
+                                <span class="text-danger font-weight-bold text-center">${teddy.name}
+                            </td>
+                            <td class="text-center">
+                                ${teddy.qty}
+                            </td>
+                            <td class="text-center price-teddy">
+                                ${price(teddy.price * teddy.qty)}
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-danger btnDelete">Supprimer</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                `
+                )
+    
 
-    // si le panier est vide : Afficher le panier est vide
-    if(productSaveLocalStorage === null || productSaveLocalStorage == 0){
-        const panierVide = `
-        <tbody class="container-panier-vide">
-            <th class="text-center"> Le panier est vide </th>
-        </tbody>
-        `;
-        positionPanier.innerHTML = panierVide
-    }
-    else {
-    // Si le panier n'est pas vide : Afficher tout les articles 
-        let structureProduitPanier = []
-        for (i = 0; i < productSaveLocalStorage.length; i++) {
-            structureProduitPanier = structureProduitPanier + `
-                            <tbody id="cart-tablebody" class="font-weight-bold">
-                                <tr class="">
-                                    <td class="text-center">
-                                        <span class="text-danger font-weight-bold text-center">${teddy.name}
-                                    </td>
-                                    <td class="text-center">
-                                        ${productSaveLocalStorage[i].quantite}
-                                    </td>
-                                    <td class="text-center">
-                                        ${(teddy.price * productSaveLocalStorage[i].quantite) / 100} €
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-danger btnDelete">Supprimer</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-            `
-        }
-        if(i == productSaveLocalStorage.length) {
-            //Injection html dans la page panier
-            positionPanier.innerHTML = structureProduitPanier
-        }
-        
-    }
+        //Injection html dans la page panier
+        positionPanier.innerHTML = html     
+        deleteProduct()
+        deleteAllProduct()
+        priceTotal(teddies)
+        sendForm()
 }
+
 // Fin de l'affichage des produits du panier 
 
 // Gestion du bouton de suppression de l'article
@@ -112,7 +74,7 @@ function deleteProduct() {
     
             // On envoie la variable dans le local storage
             // Transformation en format JSON
-            localStorage.setItem("product", JSON.stringify(productSaveLocalStorage))
+            store("products", productSaveLocalStorage)
     
             //Alert pour avertir que le produit a été supprimé et rechargement de la page
             alert("Ce produit à été supprimé du panier")
@@ -142,7 +104,7 @@ function deleteAllProduct() {
     btnAllDeleteCart.addEventListener("click", (event) => {
     event.preventDefault()
     // Vidage du localstorage 
-    localStorage.removeItem("product")
+    localStorage.removeItem("products")
 
     // Actualisation de la page
     alert("Les produits ont bien été supprimés")
@@ -151,15 +113,17 @@ function deleteAllProduct() {
 }
 
 // Calcul du montant du panier 
-function priceTotal(teddy) {
+function priceTotal(product) {
     let prixTotalCalcul = []
+    console.log(product)
     // Definition du code HTML 
     const displayPrice = document.querySelector("#priceTotal")
     if(productSaveLocalStorage !== null) {
         // On va chercher les prix dans le panier
         for (l = 0; l < productSaveLocalStorage.length; l++) {
             // A changer et selectionner l'endroit ou prendre les valeurs
-            let prixProductInCart = 0
+            let prixProductInCart = product[l].price * productSaveLocalStorage[l].quantite
+            console.log(prixProductInCart)
             // Mettre les prix du panier dans la variable prixTotal
             prixTotalCalcul.push(prixProductInCart)
         }
@@ -172,9 +136,10 @@ function priceTotal(teddy) {
 
     // Code HTML du prix total à afficher
     const affichagePrixHtml = `
-    <span class="affichage-prix-html"> ${prixTotal / 100} € </span>
+    <span class="affichage-prix-html"> ${price(prixTotal)}</span>
     `
     const displayPrixTotal = displayPrice.insertAdjacentHTML("afterBegin", affichagePrixHtml)
+    store("totalPrice", prixTotal)
 
 }
 
@@ -270,7 +235,7 @@ function sendForm() {
 
     if(controlFirstName() && controlLastName() && controlAddress() && controlCity() && controlEmail()){
         // Mettre l'objet formulaireValues dans le local storage
-        localStorage.setItem("contact", JSON.stringify(contact))
+        store("contact", contact)
     } 
 
     // Prendre la key product dans le localStorage et extraire les id
@@ -279,18 +244,18 @@ function sendForm() {
         products.push(productSaveLocalStorage[a].id_Produit)
     }
     
-    localStorage.setItem("products", JSON.stringify(products))
+    store("products", products)
 
     // Mettre les values du formulaire et les produits selectionnés dans un objet à envoyer vers le serveur
     const payload = {
         products,
         contact
     }
-    console.log(payload.products)
 
     sendToServer(payload);
 
     localStorage.removeItem("products")
+    localStorage.removeItem("contact")
     })
 
 }
@@ -311,7 +276,7 @@ function sendToServer(payload) {
             console.log(contenu.orderId)
 
             // Mettre l'orderId dans le localStorage
-            localStorage.setItem("responseOrderId", JSON.stringify(contenu.orderId))
+            store("responseOrderId", contenu.orderId)
 
             // Aller à la page de confirmation de commande 
             window.location = "commande.html"

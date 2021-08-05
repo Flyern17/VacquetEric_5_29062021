@@ -1,17 +1,15 @@
 // Main function
 (async() => {
-    displayCommandHTML()
+    displayHTML()
     deleteLocalStorage()
 })()
 
-function displayCommandHTML() {
+function displayHTML() {
     // Récupération de l'id de commande dans le local storage
     const responseId = localStorage.getItem("responseOrderId")
-    console.log(responseId)
 
     // Récupération du prix total de la commande
-    const prixTotal = localStorage.getItem("PriceTotal")
-    console.log(prixTotal)
+    const prixTotal = localStorage.getItem("totalPrice")
 
     // Structure HTML de la page confirmation commande 
     const displayCommand = document.querySelector(`#container-commande`)
@@ -23,7 +21,7 @@ function displayCommandHTML() {
             <div class="col-5 bg-dark font-weight-bold">
                 <div class="">
                     <div class="text-white w-100 py-3">La commande a bien été effectuée</div>
-                    <div class="text-white w-100 pb-3">Le prix total est de :<span class="font-weight-bold"> ${prixTotal} </span></div>
+                    <div class="text-white w-100 pb-3">Le prix total est de :<span class="font-weight-bold"> ${price(prixTotal)} </span></div>
                     <div class="text-white w-100 pb-3">Votre numéro de commande est :<span class="font-weight-bold"> ${responseId} </span></div>
                 </div>
             </div>

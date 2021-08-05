@@ -1,21 +1,21 @@
  // Main function
 ;(async() => {
-    const teddyId = requestId()
-    const teddy = await getTeddyData(teddyId)
+    const teddyId = id()
+    const teddy = await getTeddy(teddyId)
     let html = render(teddy)
     display(html)
-    listenForCartAddition(teddy)
+    cartAddition(teddy)
 })()
 
 
 // On prend l'id dans la requette HTTP 
-function requestId() {
+function id() {
     return new URL(window.location.href).searchParams.get("id")
 }
 
 // On appelle l'API
 
-function getTeddyData(id) {
+function getTeddy(id) {
     return fetch(`http://localhost:3000/api/teddies/${id}`)
     .then(response => response.json())
     .catch((error) => {
@@ -61,7 +61,7 @@ function render(teddy) {
                                 ${options}
                             </form>
                         </div>
-                        <button id="btn-addPanier" class="btn btn-info font-weight-bold text-center border border-white w-100 mt-auto">Ajouter au panier pour <span>${(teddy.price/100) + " €"}</span></button>
+                        <button id="btn-addPanier" class="btn btn-info font-weight-bold text-center border border-white w-100 mt-auto">Ajouter au panier pour <span>${(price(teddy.price))}</span></button>
                         </div>
                     </div>
             </figcaption>
@@ -78,7 +78,7 @@ function display(html) {
 
 // Ecoute l'evenement lors d'un clic
 
-function listenForCartAddition(teddy) {  
+function cartAddition(teddy) {  
     // Selection du bouton Ajouter l'article au panier
     const btnSendPanier = document.querySelector("#btn-addPanier")
 
@@ -92,12 +92,6 @@ function listenForCartAddition(teddy) {
 
 
 function addToCart(teddy) {
-
-    const idForm = document.querySelector("#options_produit")
-    // Mettre le choix du user dans une variable
-
-    // const choixForm = idForm.value
-
     // Récupération des valeurs du formulaire
     let optionsProduit = {
         id_Produit: teddy._id,
@@ -105,22 +99,21 @@ function addToCart(teddy) {
     }
     
     // Utilisation du localStorage 
-    // Stocker la récupération des valeurs dans le localStorage
 
-    let productSaveLocalStorage = JSON.parse(localStorage.getItem("product"));
-    // JSON.parse pour convertir des données en JSON
+    // Stocker la récupération des valeurs dans le localStorage
+    let productSaveLocalStorage = get("products");
 
     // Ajout d'une fonction qui ajoute un produit dans le local storage 
 
-    // SI le localStorage est vide 
+    // Si le localStorage est vide 
     if (localStorage.length == 0) {
         productSaveLocalStorage = [];
         productSaveLocalStorage.push(optionsProduit);
-        localStorage.setItem("product", JSON.stringify(productSaveLocalStorage))
+        store("products", productSaveLocalStorage)
     }
     // Si le localStorage n'est pas vide 
     else {
-        let parseProductSaveLocalStorage = JSON.parse(localStorage.product)
+        let parseProductSaveLocalStorage = JSON.parse(localStorage.products)
         const productExist = parseProductSaveLocalStorage.find(optionsProduit => optionsProduit.id_Produit == teddy._id)
         
         // Si le produit concerné n'est pas dans le tableau, on l'ajoute
@@ -136,7 +129,7 @@ function addToCart(teddy) {
             }
         }
         // On envoie le tableau dans le localStorage
-        localStorage.setItem("product", JSON.stringify(parseProductSaveLocalStorage));
+        store("products", parseProductSaveLocalStorage)
     }
     redirect(teddy.name);
 }
