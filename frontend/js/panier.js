@@ -105,7 +105,7 @@ function deleteAllProduct() {
     event.preventDefault()
     // Vidage du localstorage 
     localStorage.removeItem("products")
-
+    localStorage.removeItem("totalPrice")
     // Actualisation de la page
     alert("Les produits ont bien été supprimés")
     window.location.href = "panier.html"
@@ -233,29 +233,27 @@ function sendForm() {
     }
 
 
-    if(controlFirstName() && controlLastName() && controlAddress() && controlCity() && controlEmail()){
-        // Mettre l'objet formulaireValues dans le local storage
-        store("contact", contact)
-    } 
+        if(controlFirstName() && controlLastName() && controlAddress() && controlCity() && controlEmail()){
+            // Mettre l'objet formulaireValues dans le local storage
+            store("contact", contact)
 
-    // Prendre la key product dans le localStorage et extraire les id
-    let products = []
-    for (a = 0; a < productSaveLocalStorage.length; a++) {
-        products.push(productSaveLocalStorage[a].id_Produit)
-    }
-    
-    store("products", products)
+            // Prendre la key product dans le localStorage et extraire les id
+            let products = []
+            for (a = 0; a < productSaveLocalStorage.length; a++) {
+                products.push(productSaveLocalStorage[a].id_Produit)
+            }
+            
+            store("products", products)
 
-    // Mettre les values du formulaire et les produits selectionnés dans un objet à envoyer vers le serveur
-    const payload = {
-        products,
-        contact
-    }
-
-    sendToServer(payload);
-
-    localStorage.removeItem("products")
-    localStorage.removeItem("contact")
+            // Mettre les values du formulaire et les produits selectionnés dans un objet à envoyer vers le serveur
+            const payload = {
+                products,
+                contact
+            }
+            sendToServer(payload);
+            localStorage.removeItem("products")
+            localStorage.removeItem("contact")
+        } 
     })
 
 }
@@ -278,8 +276,10 @@ function sendToServer(payload) {
             // Mettre l'orderId dans le localStorage
             store("responseOrderId", contenu.orderId)
 
+                
             // Aller à la page de confirmation de commande 
             window.location = "commande.html"
+            
         }catch(error){
             alert(`${error}`)
         }
